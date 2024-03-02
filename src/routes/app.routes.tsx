@@ -1,5 +1,4 @@
 import { Home } from "@screens/home";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export const AppRoutes = () => {
