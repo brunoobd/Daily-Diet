@@ -22,7 +22,7 @@ export const Container = styled(TouchableOpacity)<Props>`
   ${({ theme, variant }) => css`
     background-color: ${variant === "PRIMARY"
       ? theme.COLORS.GRAY_600
-      : theme.COLORS.GRAY_600};
+      : "transparent"};
 
     ${variant === "SECONDARY" &&
     css`
