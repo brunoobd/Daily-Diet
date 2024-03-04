@@ -19,11 +19,7 @@ export default function App() {
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
         <StatusBar style={"dark"} backgroundColor={"transparent"} translucent />
-        <SafeAreaView
-          style={{ flex: 1, backgroundColor: theme.COLORS.GRAY_100 }}
-        >
-          {fontsLoaded ? <Routes /> : <ActivityIndicator />}
-        </SafeAreaView>
+        {fontsLoaded ? <Routes /> : <ActivityIndicator />}
       </ThemeProvider>
     </SafeAreaProvider>
   );
