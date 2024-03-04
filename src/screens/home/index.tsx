@@ -12,8 +12,11 @@ import {
 import { SectionList, View } from "react-native";
 import { Meal } from "src/model";
 import { MealItem } from "@components/mealItem";
+import { useNavigation } from "@react-navigation/native";
 
 export const Home = () => {
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Header>
@@ -21,7 +24,11 @@ export const Home = () => {
         <ProfilePicture />
       </Header>
 
-      <Percent title={"90,86%"} subtitle={"das refeições dentro da dieta"} />
+      <Percent
+        title={"90,86%"}
+        subtitle={"das refeições dentro da dieta"}
+        onPress={() => navigation.navigate("statistics")}
+      />
 
       <MealsContainer>
         <MealsTitle>Refeições</MealsTitle>
