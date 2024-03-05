@@ -23,7 +23,7 @@ export const Container = styled.View<SafeAreaViewProps & Props>`
 
 export const StatisticsHeader = styled.View`
   width: 100%;
-  padding: 10px 32px 30px 32px;
+  padding: 0 32px 30px 32px;
 
   align-items: center;
   justify-content: center;
