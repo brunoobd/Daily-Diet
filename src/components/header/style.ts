@@ -10,6 +10,7 @@ type Props = {
 export const Container = styled.View`
   width: 100%;
   height: 25px;
+  padding: 0 32px;
 
   flex-direction: row;
   align-items: center;
@@ -20,7 +21,7 @@ export const Container = styled.View`
 
 export const ButtonIcon = styled.TouchableOpacity`
   position: absolute;
-  left: 0;
+  left: 32px;
 `;
 
 export const Icon = styled(ArrowLeft).attrs<Props>(({ theme, variant }) => ({

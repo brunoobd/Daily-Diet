@@ -17,9 +17,8 @@ export const Statistics = () => {
 
   return (
     <Container inDiet={inDiet} insets={insets}>
+      <Header variant={inDiet ? "PRIMARY" : "SECONDARY"} />
       <StatisticsHeader>
-        <Header variant={inDiet ? "PRIMARY" : "SECONDARY"} />
-
         <StatisticsHeaderTitle>90,86%</StatisticsHeaderTitle>
         <StatisticsHeaderSubtitle>
           das refeições dentro da dieta
