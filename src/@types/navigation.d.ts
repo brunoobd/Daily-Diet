@@ -7,6 +7,9 @@ export declare global {
       feedback: {
         inDiet: boolean;
       };
+      mealDetail: {
+        id: number;
+      };
     }
   }
 }

@@ -1,15 +1,14 @@
 import { TouchableOpacity } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import styled, { css } from "styled-components/native";
 
 export type ButtonIconTypeStyleProps = "PRIMARY" | "SECONDARY";
 
 type Props = {
   variant: ButtonIconTypeStyleProps;
+  halfSize: boolean;
 };
 
 export const Container = styled(TouchableOpacity)<Props>`
-  width: 100%;
   height: 50px;
 
   flex-direction: row;
@@ -19,26 +18,23 @@ export const Container = styled(TouchableOpacity)<Props>`
 
   border-radius: 6px;
 
-  ${({ theme, variant }) => css`
-    background-color: ${variant === "PRIMARY"
-      ? theme.COLORS.GRAY_600
-      : "transparent"};
+  ${({ theme, variant, halfSize }) => css`
+    width: ${halfSize ? "48%" : "100%"};
 
-    ${variant === "SECONDARY" &&
-    css`
-      border: 1px solid ${theme.COLORS.GRAY_700};
-    `}
+    background-color: ${
+      variant === "PRIMARY" ? theme.COLORS.GRAY_600 : "transparent"
+    };
+
+    ${
+      variant === "SECONDARY" &&
+      css`
+        border: 1px solid ${theme.COLORS.GRAY_700};
+      `
+    }
   `}
 `;
 
-export const Icon = styled(MaterialIcons).attrs<Props>(
-  ({ theme, variant }) => ({
-    size: 20,
-    color: variant === "PRIMARY" ? theme.COLORS.WHITE : theme.COLORS.GRAY_700,
-  })
-)``;
-
-export const Title = styled.Text<Props>`
+export const Title = styled.Text<{ variant: Props["variant"] }>`
   ${({ theme, variant }) => css`
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-size: ${theme.FONT_SIZE.SM}px;

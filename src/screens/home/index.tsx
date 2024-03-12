@@ -14,9 +14,18 @@ import { Meal } from "src/model";
 import { MealItem } from "@components/mealItem";
 import { useNavigation } from "@react-navigation/native";
 import { DateTime } from "luxon";
+import { Plus } from "phosphor-react-native";
 
 export const Home = () => {
   const navigation = useNavigation();
+
+  const renderItem = ({ item }: { item: Meal }) => {
+    const onPressItem = () => {
+      navigation.navigate("mealDetail", { id: item.id });
+    };
+
+    return <MealItem meal={item} onPress={onPressItem} />;
+  };
 
   return (
     <Container>
@@ -34,13 +43,29 @@ export const Home = () => {
       <MealsContainer>
         <MealsTitle>Refeições</MealsTitle>
         <ButtonIcon
-          iconName={"add"}
           title={"Nova refeição"}
           onPress={() => navigation.navigate("newMeal")}
-        />
+        >
+          <Plus size={18} color={"white"} />
+        </ButtonIcon>
+
         <SectionList
-          sections={[]}
-          renderItem={({ item }: { item: Meal }) => <MealItem meal={item} />}
+          sections={[
+            {
+              title: "teste",
+              data: [
+                {
+                  id: 1,
+                  name: "Sanduíche",
+                  description: "teste",
+                  hour: DateTime.now(),
+                  date: DateTime.now(),
+                  inDiet: true,
+                },
+              ],
+            },
+          ]}
+          renderItem={renderItem}
           renderSectionHeader={({ section: { title } }) => (
             <MealDayListTitle>{title}</MealDayListTitle>
           )}

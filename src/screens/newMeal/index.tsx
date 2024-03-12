@@ -52,8 +52,8 @@ export const NewMeal = ({ defaultValues }: Props) => {
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const insets = useSafeAreaInsets();
   const { navigate } = useNavigation();
+  const insets = useSafeAreaInsets();
 
   const onSubmit = (formData: FormData) => {
     const newFormData = { ...formData, date: getValues("date") };
@@ -61,14 +61,7 @@ export const NewMeal = ({ defaultValues }: Props) => {
     navigate("feedback", { inDiet: formData.inDiet });
   };
 
-  const requiredValidateString = (value: string): string | undefined => {
-    if (!value) {
-      return "O campo não pode ser vazio!";
-    }
-    return undefined;
-  };
-
-  const requiredValidateDateTime = (value: DateTime): string | undefined => {
+  const requiredValidate = (value: string | DateTime): string | undefined => {
     if (!value) {
       return "O campo não pode ser vazio!";
     }
@@ -94,7 +87,7 @@ export const NewMeal = ({ defaultValues }: Props) => {
                 control={control}
                 rules={{
                   maxLength: 40,
-                  validate: requiredValidateString,
+                  validate: requiredValidate,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
@@ -126,7 +119,7 @@ export const NewMeal = ({ defaultValues }: Props) => {
                 control={control}
                 rules={{
                   maxLength: 200,
-                  validate: requiredValidateString,
+                  validate: requiredValidate,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
@@ -160,7 +153,7 @@ export const NewMeal = ({ defaultValues }: Props) => {
                 <Controller
                   control={control}
                   rules={{
-                    validate: requiredValidateDateTime,
+                    validate: requiredValidate,
                   }}
                   render={({ field: { onChange, value } }) => (
                     <>
@@ -202,7 +195,7 @@ export const NewMeal = ({ defaultValues }: Props) => {
                 <Controller
                   control={control}
                   rules={{
-                    validate: requiredValidateDateTime,
+                    validate: requiredValidate,
                   }}
                   render={({ field: { onChange, value } }) => (
                     <>
