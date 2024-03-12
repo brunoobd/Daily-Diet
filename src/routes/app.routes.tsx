@@ -1,6 +1,8 @@
 import { Home } from "@screens/home";
 import { Statistics } from "@screens/statistics";
+import { NewMeal } from "@screens/newMeal";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Feedback } from "@screens/feedback";
 
 export const AppRoutes = () => {
   const { Navigator, Screen } = createNativeStackNavigator();
@@ -9,6 +11,8 @@ export const AppRoutes = () => {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="home" component={Home} />
       <Screen name="statistics" component={Statistics} />
+      <Screen name="newMeal" component={NewMeal} />
+      <Screen name="feedback" component={Feedback} />
     </Navigator>
   );
 };

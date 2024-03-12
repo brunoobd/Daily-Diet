@@ -13,6 +13,7 @@ import { SectionList, View } from "react-native";
 import { Meal } from "src/model";
 import { MealItem } from "@components/mealItem";
 import { useNavigation } from "@react-navigation/native";
+import { DateTime } from "luxon";
 
 export const Home = () => {
   const navigation = useNavigation();
@@ -32,7 +33,11 @@ export const Home = () => {
 
       <MealsContainer>
         <MealsTitle>Refeições</MealsTitle>
-        <ButtonIcon iconName={"add"} title={"Nova refeição"} />
+        <ButtonIcon
+          iconName={"add"}
+          title={"Nova refeição"}
+          onPress={() => navigation.navigate("newMeal")}
+        />
         <SectionList
           sections={[]}
           renderItem={({ item }: { item: Meal }) => <MealItem meal={item} />}
