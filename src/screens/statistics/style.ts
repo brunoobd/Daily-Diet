@@ -1,4 +1,4 @@
-import { EdgeInsets, SafeAreaView } from "react-native-safe-area-context";
+import { EdgeInsets } from "react-native-safe-area-context";
 import styled, { css } from "styled-components/native";
 
 type Props = {

@@ -9,23 +9,59 @@ import {
   MealsTitle,
   ProfilePicture,
 } from "./style";
-import { SectionList, View } from "react-native";
-import { Meal } from "src/model";
+import { SectionList } from "react-native";
+import { Meal, Statistics } from "src/model";
 import { MealItem } from "@components/mealItem";
-import { useNavigation } from "@react-navigation/native";
-import { DateTime } from "luxon";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Plus } from "phosphor-react-native";
+import { getMealsDateGroups } from "@storage/meal/get-meals-date-groups";
+import { useCallback, useState } from "react";
+import { Loading } from "@components/loading";
+import { getStatistics } from "@storage/meal/get-statistics";
 
 export const Home = () => {
-  const navigation = useNavigation();
+  const [statistics, setStatistics] = useState<Statistics>();
+  const [mealsDateGroups, setMealsDateGroups] =
+    useState<Array<{ title: string; data: Array<Meal> }>>();
+  const [isLoading, setIsLoading] = useState(true);
+  const { navigate } = useNavigation();
 
   const renderItem = ({ item }: { item: Meal }) => {
     const onPressItem = () => {
-      navigation.navigate("mealDetail", { id: item.id });
+      navigate("mealDetail", { mealId: item.id });
     };
 
     return <MealItem meal={item} onPress={onPressItem} />;
   };
+
+  const fetchMealsDateGroups = async () => {
+    try {
+      setIsLoading(true);
+      setMealsDateGroups(undefined);
+
+      const data = await getMealsDateGroups();
+
+      console.log(data);
+
+      setMealsDateGroups(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchStatistics = async () => {
+    const data = await getStatistics();
+    setStatistics(data);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMealsDateGroups();
+      fetchStatistics();
+    }, [])
+  );
 
   return (
     <Container>
@@ -35,44 +71,34 @@ export const Home = () => {
       </Header>
 
       <Percent
-        title={"90,86%"}
+        inDiet={statistics?.inDiet}
+        title={`${statistics?.percentInDiet}%`}
         subtitle={"das refeições dentro da dieta"}
-        onPress={() => navigation.navigate("statistics")}
+        onPress={() => navigate("statistics")}
       />
 
       <MealsContainer>
         <MealsTitle>Refeições</MealsTitle>
-        <ButtonIcon
-          title={"Nova refeição"}
-          onPress={() => navigation.navigate("newMeal")}
-        >
+        <ButtonIcon title={"Nova refeição"} onPress={() => navigate("newMeal")}>
           <Plus size={18} color={"white"} />
         </ButtonIcon>
 
-        <SectionList
-          sections={[
-            {
-              title: "teste",
-              data: [
-                {
-                  id: 1,
-                  name: "Sanduíche",
-                  description: "teste",
-                  hour: DateTime.now(),
-                  date: DateTime.now(),
-                  inDiet: true,
-                },
-              ],
-            },
-          ]}
-          renderItem={renderItem}
-          renderSectionHeader={({ section: { title } }) => (
-            <MealDayListTitle>{title}</MealDayListTitle>
-          )}
-          keyExtractor={(item: Meal) => `${item.id}`}
-          showsVerticalScrollIndicator={false}
-          stickySectionHeadersEnabled={false}
-        />
+        {!isLoading && !!mealsDateGroups ? (
+          <SectionList
+            sections={mealsDateGroups}
+            renderItem={renderItem}
+            renderSectionHeader={({ section: { title } }) => (
+              <MealDayListTitle>{title}</MealDayListTitle>
+            )}
+            keyExtractor={(item: Meal) => `${item.id}`}
+            showsVerticalScrollIndicator={false}
+            stickySectionHeadersEnabled={false}
+            /* TODO: LIST EMPTY COMPONENT */
+            ListEmptyComponent={<></>}
+          />
+        ) : (
+          <Loading />
+        )}
       </MealsContainer>
     </Container>
   );

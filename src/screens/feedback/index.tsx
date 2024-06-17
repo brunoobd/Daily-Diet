@@ -7,13 +7,17 @@ import {
   Title,
   TitleContainer,
 } from "./style";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 
 type RouteParams = {
   inDiet: boolean;
 };
 
 export const Feedback = () => {
+
   const { inDiet } = useRoute().params as RouteParams;
   const { navigate } = useNavigation();
 

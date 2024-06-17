@@ -1,29 +1,23 @@
 import { TouchableOpacityProps } from "react-native";
-import {
-  Container,
-  Icon,
-  PercentTypeStyleProps,
-  Subtitle,
-  Title,
-} from "./style";
+import { Container, Icon, Subtitle, Title } from "./style";
 
 type Props = TouchableOpacityProps & {
   title: string;
   subtitle: string;
-  variant?: PercentTypeStyleProps;
+  inDiet?: boolean;
 };
 
 export const Percent = ({
   title,
   subtitle,
-  variant = "PRIMARY",
+  inDiet = false,
   ...props
 }: Props) => {
   return (
-    <Container variant={variant} {...props}>
+    <Container inDiet={inDiet} {...props}>
       <Title>{title}</Title>
       <Subtitle>{subtitle}</Subtitle>
-      <Icon variant={variant} />
+      <Icon inDiet={inDiet} />
     </Container>
   );
 };

@@ -8,7 +8,10 @@ export declare global {
         inDiet: boolean;
       };
       mealDetail: {
-        id: number;
+        mealId: number;
+      };
+      editMeal: {
+        mealId: number;
       };
     }
   }

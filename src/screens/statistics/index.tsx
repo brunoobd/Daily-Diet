@@ -10,16 +10,35 @@ import {
 } from "./style";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { StatisticsCard } from "@components/statisticsCard";
+import { useCallback, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { getStatistics } from "@storage/meal/get-statistics";
+import { Statistics as StatisticsType } from "src/model";
 
 export const Statistics = () => {
+  const [statistics, setStatistics] = useState<StatisticsType>();
+  const [inDiet, setInDiet] = useState<boolean>(false);
   const insets = useSafeAreaInsets();
-  const inDiet = true;
+
+  const fetchStatistics = async () => {
+    const data = await getStatistics();
+    setStatistics(data);
+    setInDiet(data.inDiet);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchStatistics();
+    }, [])
+  );
 
   return (
     <Container inDiet={inDiet} insets={insets}>
       <Header variant={inDiet ? "PRIMARY" : "SECONDARY"} />
       <StatisticsHeader>
-        <StatisticsHeaderTitle>90,86%</StatisticsHeaderTitle>
+        <StatisticsHeaderTitle>
+          {statistics?.percentInDiet}%
+        </StatisticsHeaderTitle>
         <StatisticsHeaderSubtitle>
           das refeições dentro da dieta
         </StatisticsHeaderSubtitle>
@@ -29,21 +48,32 @@ export const Statistics = () => {
         <ContentTitle>Estatísticas gerais</ContentTitle>
 
         <StatisticsCard
-          title={"22"}
+          title={`${statistics?.greaterMealSequency}`}
           subtitle={"melhor sequência de pratos dentro da dieta"}
-        />
+        />    
 
-        <StatisticsCard title={"109"} subtitle={"refeições registradas"} />
+        <StatisticsCard
+          title={`${statistics?.registeredMeals}`}
+          subtitle={`${
+            statistics?.registeredMeals === 1
+              ? "refeição registrada"
+              : "refeições registradas"
+          }`}
+        />
 
         <CardContainer>
           <StatisticsCard
-            title={"99"}
-            subtitle={"refeições dentro da dieta"}
+            title={`${statistics?.mealsInDiet}`}
+            subtitle={`${
+              statistics?.mealsInDiet === 1 ? "refeição" : "refeições"
+            } dentro da dieta`}
             variant={"PRIMARY"}
           />
           <StatisticsCard
-            title={"10"}
-            subtitle={"refeições fora da dieta"}
+            title={`${statistics?.mealsOutDiet}`}
+            subtitle={`${
+              statistics?.mealsOutDiet === 1 ? "refeição" : "refeições"
+            } fora da dieta`}
             variant={"SECONDARY"}
           />
         </CardContainer>

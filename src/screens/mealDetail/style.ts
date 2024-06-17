@@ -7,13 +7,18 @@ type ContainerProps = {
   inDiet: boolean;
 };
 
-export const Container = styled.KeyboardAvoidingView<ContainerProps>`
+export const Container = styled.KeyboardAvoidingView<{
+  insets: ContainerProps["insets"];
+  inDiet: ContainerProps["inDiet"] | undefined;
+}>`
   flex: 1;
 
   ${({ insets, theme, inDiet }) => css`
     padding-top: ${insets.top}px;
 
-    background-color: ${inDiet
+    background-color: ${inDiet === undefined
+      ? theme.COLORS.GRAY_300
+      : inDiet
       ? theme.COLORS.GREEN_LIGHT
       : theme.COLORS.RED_LIGHT};
   `}
@@ -37,7 +42,7 @@ export const Content = styled.View<{ insets: ContainerProps["insets"] }>`
 `;
 
 export const TextContainer = styled.View`
-  width: 100%;
+  width: 50%;
 
   align-items: left;
   justify-content: center;
@@ -76,13 +81,15 @@ export const DateAndTimeDescription = styled.Text`
   `}
 `;
 
-export const InDietTag = styled.View`
-  width: 145px;
+export const InDietTag = styled.View<{ inDiet: ContainerProps["inDiet"] }>`
+  width: ${({ inDiet }) => (inDiet ? 150 : 130)}px;
+  max-width: 150px;
   padding: 8px 16px;
 
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
+  gap: 10px;
 
   border-radius: 50px;
 

@@ -32,7 +32,7 @@ export const Content = styled.View<Props>`
   `}
 `;
 
-export const Form = styled.View`
+export const Form = styled.ScrollView`
   width: 100%;
 
   flex: 1;

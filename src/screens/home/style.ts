@@ -29,7 +29,6 @@ export const ProfilePicture = styled(UserCircle).attrs(() => ({
 
 export const MealsContainer = styled.View`
   flex: 1;
-  align-items: start;
   gap: 10px;
 `;
 
@@ -49,4 +48,16 @@ export const MealDayListTitle = styled.Text`
     font-size: ${theme.FONT_SIZE.LG}px;
     color: ${theme.COLORS.GRAY_700};
   `}
+`;
+
+export const EmptyList = styled.View`
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyListTitle = styled.Text`
+  text-align: center;
 `;

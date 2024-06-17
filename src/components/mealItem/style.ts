@@ -1,4 +1,3 @@
-import theme from "src/theme";
 import styled, { css } from "styled-components/native";
 
 type Props = { inDiet: boolean };

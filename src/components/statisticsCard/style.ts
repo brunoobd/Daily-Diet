@@ -8,6 +8,7 @@ type Props = {
 
 export const Container = styled.View<Props>`
   width: ${({ variant }) => (variant === "DEFAULT" ? "100%" : "48%")};
+  min-height: 110px;
   padding: 16px;
 
   align-items: center;

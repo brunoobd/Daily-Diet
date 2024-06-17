@@ -1,10 +1,8 @@
 import styled, { css } from "styled-components/native";
 import { ArrowUpRight } from "phosphor-react-native";
 
-export type PercentTypeStyleProps = "PRIMARY" | "SECONDARY";
-
 type Props = {
-  variant?: PercentTypeStyleProps;
+  inDiet: boolean;
 };
 
 export const Container = styled.TouchableOpacity<Props>`
@@ -18,8 +16,8 @@ export const Container = styled.TouchableOpacity<Props>`
 
   border-radius: 5px;
 
-  background-color: ${({ theme, variant }) =>
-    variant === "PRIMARY" ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+  background-color: ${({ theme, inDiet }) =>
+    inDiet ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
 `;
 
 export const Title = styled.Text`
@@ -38,12 +36,11 @@ export const Subtitle = styled.Text`
   `}
 `;
 
-export const Icon = styled(ArrowUpRight).attrs<Props>(({ theme, variant }) => ({
+export const Icon = styled(ArrowUpRight).attrs<Props>(({ theme, inDiet }) => ({
   size: 24,
-  color:
-    variant === "PRIMARY" ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
+  color: inDiet ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK,
 }))`
-  position: absolute; 
+  position: absolute;
   top: 10px;
   right: 10px;
 `;

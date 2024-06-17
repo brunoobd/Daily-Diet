@@ -7,10 +7,11 @@ type Props = {
   errorStyle: boolean;
 };
 
-export const Container = styled.TextInput.attrs<Props>(({ variant }) => ({
+export const Container = styled.TextInput.attrs<Props>(({ variant, theme }) => ({
   multiline: variant === "SECONDARY",
   numberOfLines: variant === "PRIMARY" ? 1 : 4,
   textAlignVertical: variant === "SECONDARY" ? "top" : "auto",
+  cursorColor: theme.COLORS.GRAY_700,
 }))`
   width: 100%;
   padding: 14px;
